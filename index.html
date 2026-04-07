@@ -44,6 +44,7 @@
         /* --- 2. THE MAIN HOLOGRAPHIC CONTAINER --- */
         .main-container {
             background: var(--panel-bg);
+            transform: perspective(1000px) rotateX(0.5deg) rotateY(-0.2deg);
     padding: 40px;
     border-radius: 20px;
     width: 700px; /* Increased from 500px to 700px */
@@ -71,6 +72,8 @@
         }
 
         .main-container:hover {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    box-shadow: 0 0 20px rgba(0, 255, 210, 0.15);
             transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
             box-shadow: 
                 0 0 25px rgba(0, 255, 210, 0.2),
