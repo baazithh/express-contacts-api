@@ -9,12 +9,12 @@
         /* --- 1. CORE STYLES & ANIMATIONS --- */
         :root {
             --bg-color: #000212;
-            --holo-cyan: #0fffd2;
-            --holo-magenta: #f0f;
-            --holo-blue: #0ae;
+            --holo-cyan: #9e0b0b;
+            --holo-magenta: #9e0b0b;
+            --holo-blue: #9e0b0b;
             --text-color: #fff;
-            --panel-bg: rgba(16, 24, 60, 0.4);
-            --border-color: rgba(0, 255, 210, 0.3);
+            --panel-bg: rgb(0, 0, 0);
+            --border-color: #9e0b0b;
             --transition: all 0.3s ease-out;
             --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
@@ -160,12 +160,12 @@
 <body>
 
     <div class="main-container">
-        <h1>HoloContact v1.0</h1>
+        <h1>CONTACT TABLE</h1>
         
         <div class="form-group">
-            <input type="text" id="name" placeholder="IDENTIFIER (NAME)">
-            <input type="email" id="email" placeholder="COMMS ADDRESS (EMAIL)">
-            <button class="btn-add" onclick="addContact()">Commit</button>
+            <input type="text" id="name" placeholder="NAME">
+            <input type="email" id="email" placeholder="EMAIL">
+            <button class="btn-add" onclick="addContact()">ADD</button>
         </div>
 
         <ul id="contactList">
@@ -192,7 +192,7 @@
                                 <span class="contact-name">${contact.name}</span>
                                 <span class="contact-email">${contact.email}</span>
                             </div>
-                            <button class="btn-delete" onclick="deleteContact('${contact.id}')">Purge</button>
+                            <button class="btn-delete" onclick="deleteContact('${contact.id}')">REMOVE</button>
                         </li>`;
                 });
             } catch (error) {
