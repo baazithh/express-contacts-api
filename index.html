@@ -44,6 +44,11 @@
         /* --- 2. THE MAIN HOLOGRAPHIC CONTAINER --- */
         .main-container {
             background: var(--panel-bg);
+    padding: 40px;
+    border-radius: 20px;
+    width: 700px; /* Increased from 500px to 700px */
+    position: relative;
+            background: var(--panel-bg);
             padding: 40px;
             border-radius: 20px;
             width: 500px;
@@ -85,9 +90,10 @@
 
         /* --- 4. INPUTS & FORM (Holo-Input Style) --- */
         .form-group {
-            display: flex;
+           display: flex;
+           flex-direction: column; /* Stack them vertically for a cleaner 3D look */
             gap: 15px;
-            margin-bottom: 25px;
+             margin-bottom: 25px;
         }
 
         input {
@@ -127,6 +133,12 @@
             border: 2px solid var(--holo-cyan);
             color: var(--holo-cyan);
             text-shadow: 0 0 5px var(--holo-cyan);
+            btn-add {
+    width: 100%; 
+    
+    
+    
+}
         }
 
         .btn-add:hover {
@@ -230,7 +242,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:3000/api/contacts';
+        const API_URL = 'http://localhost:8000/api/contacts';
 
         async function loadContacts() {
             try {
@@ -280,6 +292,19 @@
             await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
             loadContacts();
         }
+        data.forEach(contact => {
+    // 🚨 Check if contact exists and has a name before trying to render it
+    if (contact && contact.name) {
+        list.innerHTML += `
+            <li>
+                <div class="contact-info">
+                    <span class="contact-name">${contact.name}</span>
+                    <span class="contact-email">${contact.email || 'No Email'}</span>
+                </div>
+                <button class="btn-delete" onclick="deleteContact('${contact.id}')">Purge</button>
+            </li>`;
+    }
+});
 
         // Initialize connection
         loadContacts();
