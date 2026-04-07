@@ -1,8 +1,9 @@
-const express=require('express');
-const app = express();
-app.get('/' ,(req,res)=>{
-    res.send('hello world');
-})
-app.listen(3000,()=>{
-    console.log('Running...');
+const express = require('express');
+const app =express();
+app.use(express.json());
+const contactRoutes = require('./routes/contactRoutes');
+const authRoutes = require('./routes/authRoutes');
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
