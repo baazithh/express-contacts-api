@@ -18,12 +18,18 @@ const addContact = (req, res) => {
 };
 
 const deleteContact = (req, res) => {
-    // 🚨 FIX 2: Use the raw ID or ensure types match (Model usually stores strings/numbers)
-    const id = req.params.id; 
-    model.remove(id);
-    
-    // 🚨 FIX 3: It is res.send (lowercase 's'), not res.Send
-    res.send('Deleted'); 
+    try {
+        const id = req.params.id; 
+        
+        // Log to your terminal so you can see what's happening
+        console.log(`Attempting to delete ID: ${id}`);
+        
+        model.remove(id);
+        res.status(200).send('Deleted successfully');
+    } catch (error) {
+        console.error("Delete Error:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
 };
 
 module.exports = { getContacts, deleteContact, addContact };
