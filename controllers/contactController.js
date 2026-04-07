@@ -2,42 +2,66 @@ const model = require('../models/contactModel');
 
 // GET all contacts
 const getContacts = (req, res) => {
-    const contacts = model.getAll();
-    res.json(contacts);
+    try {
+        const contacts = model.getAll();
+        res.json(contacts);
+    } catch (error) {
+        console.error("GET Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
 // POST a new contact
 const addContact = (req, res) => {
-    const { name, email } = req.body;
+    try {
+        const { name, email } = req.body;
 
-    // Simple Validation
-    if (!name || !email) {
-        return res.status(400).json({ message: "Name and Email are required" });
+        // Validation
+        if (!name || !email) {
+            return res.status(400).json({ message: "Name and Email are required" });
+        }
+
+        const newContact = {
+            id: Date.now().toString(),
+            name,
+            email
+        };
+
+        model.add(newContact);
+
+        res.status(201).json(newContact);
+    } catch (error) {
+        console.error("POST Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-
-    const newContact = {
-        id: Date.now().toString(),
-        name,
-        email
-    };
-
-    model.add(newContact); 
-    res.status(201).json(newContact);
 };
 
 // DELETE a contact
 const deleteContact = (req, res) => {
     try {
         const { id } = req.params;
-        
-        // Logic check: does the contact exist?
-        model.remove(id); 
-        
-        res.status(200).send('Deleted successfully'); 
+
+        // Check if contact exists before deleting
+        const beforeCount = model.getAll().length;
+
+        model.remove(id);
+
+        const afterCount = model.getAll().length;
+
+        if (beforeCount === afterCount) {
+            return res.status(404).json({ message: "Contact not found" });
+        }
+
+        res.status(200).json({ message: 'Deleted successfully' });
+
     } catch (error) {
-        console.error("Backend Error:", error);
+        console.error("DELETE Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
-module.exports = { getContacts, deleteContact, addContact };
+module.exports = {
+    getContacts,
+    addContact,
+    deleteContact
+};
